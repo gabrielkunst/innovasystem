@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: bitnami/postgresql:13
+    container_name: innovasystem-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: innovasystem
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+volumes:
+    postgres-data:
