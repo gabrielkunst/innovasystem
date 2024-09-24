@@ -1,5 +1,6 @@
 package com.gk.innovasystem.services;
 import com.gk.innovasystem.entities.UserEntity;
+import com.gk.innovasystem.exceptions.InvalidRequestException;
 import com.gk.innovasystem.exceptions.ResourceAlreadyExistsException;
 import com.gk.innovasystem.exceptions.ResourceNotFoundException;
 import com.gk.innovasystem.repositories.UserRepository;
@@ -48,7 +49,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public UserEntity updateUserRole(Long id, UserEntity.Role role) {
+    public UserEntity updateUserRole(Long id, Long adminId, UserEntity.Role role) {
+        UserEntity adminFromDB = userRepository.findById(adminId).orElseThrow(() ->
+                new ResourceNotFoundException("Admin with id " + adminId + " not found"));
+
+        if (!adminFromDB.getRole().equals(UserEntity.Role.ADMIN)) {
+            throw new InvalidRequestException("Only admins can update user roles");
+        }
+
         UserEntity userFromDB = userRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("User with id " + id + " not found"));
 

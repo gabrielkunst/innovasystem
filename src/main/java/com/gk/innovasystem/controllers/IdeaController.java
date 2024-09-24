@@ -1,7 +1,11 @@
 package com.gk.innovasystem.controllers;
 
+import com.gk.innovasystem.dtos.CreateIdeaDTO;
+import com.gk.innovasystem.entities.EventEntity;
 import com.gk.innovasystem.entities.IdeaEntity;
+import com.gk.innovasystem.entities.UserEntity;
 import com.gk.innovasystem.services.IdeaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +25,22 @@ public class IdeaController {
     }
 
     @PostMapping
-    public ResponseEntity<IdeaEntity> createIdea(@RequestBody IdeaEntity ideaEntity) {
+    public ResponseEntity<IdeaEntity> createIdea(@RequestBody @Valid CreateIdeaDTO createIdeaDTO) {
+
+        UserEntity createdBy = new UserEntity();
+        createdBy.setId(createIdeaDTO.getCreatedBy());
+
+        EventEntity event = new EventEntity();
+        event.setId(createIdeaDTO.getEventId());
+
+        IdeaEntity ideaEntity = new IdeaEntity();
+        ideaEntity.setName(createIdeaDTO.getName());
+        ideaEntity.setDescription(createIdeaDTO.getDescription());
+        ideaEntity.setCreatedBy(createdBy);
+        ideaEntity.setImpact(createIdeaDTO.getImpact());
+        ideaEntity.setEstimatedCost(createIdeaDTO.getEstimatedCost());
+        ideaEntity.setEvent(event);
+
         IdeaEntity createdIdea = ideaService.createIdea(ideaEntity);
         return new ResponseEntity<>(createdIdea, HttpStatus.CREATED);
     }

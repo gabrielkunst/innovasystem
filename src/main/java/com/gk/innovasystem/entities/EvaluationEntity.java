@@ -20,7 +20,6 @@ public class EvaluationEntity {
     @Column(nullable = false)
     private Double score;
 
-
     @ManyToOne
     @JoinColumn(name = "idea_id")
     private IdeaEntity idea;

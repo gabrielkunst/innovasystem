@@ -32,8 +32,6 @@ public class VoteService {
         this.userRepository = userRepository;
     }
 
-
-
     public void vote(Long userId, Long eventId, Long ideaId) {
         EventEntity eventFromDB = eventRepository.findById(eventId).orElseThrow(() -> new ResourceNotFoundException("Event not found"));
         IdeaEntity ideaFromDB = ideaRepository.findById(ideaId).orElseThrow(() -> new ResourceNotFoundException("Idea not found"));

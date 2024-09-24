@@ -1,6 +1,7 @@
 package com.gk.innovasystem.controllers;
 
 import com.gk.innovasystem.dtos.RegisterDTO;
+import com.gk.innovasystem.dtos.UpdateRoleDTO;
 import com.gk.innovasystem.entities.UserEntity;
 import com.gk.innovasystem.services.UserService;
 import jakarta.validation.Valid;
@@ -52,8 +53,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}/role")
-    public ResponseEntity<UserEntity> updateUserRole(@PathVariable Long id, @RequestBody UserEntity.Role role) {
-        UserEntity updatedUser = userService.updateUserRole(id, role);
+    public ResponseEntity<UserEntity> updateUserRole(@PathVariable Long id, @Valid @RequestBody UpdateRoleDTO updateRoleDTO) {
+        UserEntity updatedUser = userService.updateUserRole(id, updateRoleDTO.getAdminId(), updateRoleDTO.getRole());
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 }

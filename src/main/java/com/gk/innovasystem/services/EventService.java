@@ -29,6 +29,8 @@ public class EventService {
                 () -> new ResourceNotFoundException("User with id " + createdBy + " not found")
         );
 
+        System.out.println(userFromDB.getRole());
+
         if (!userFromDB.getRole().equals(UserEntity.Role.ADMIN)) {
             throw new InvalidRequestException("User with id " + createdBy + " is not authorized to create events");
         }
