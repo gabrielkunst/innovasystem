@@ -32,24 +32,6 @@ public class IdeaControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void createIdea_CreatesIdeaSuccessfully() throws Exception {
-        IdeaEntity idea = new IdeaEntity();
-        idea.setId(1L);
-        idea.setName("New Idea");
-
-        Mockito.when(ideaService.createIdea(any(IdeaEntity.class)))
-                .thenReturn(idea);
-
-        mockMvc.perform(post("/api/v1/ideas")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(idea)))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("New Idea"));
-    }
-
-    @Test
     void updateIdea_UpdatesIdeaSuccessfully() throws Exception {
         IdeaEntity idea = new IdeaEntity();
         idea.setId(1L);

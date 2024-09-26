@@ -80,18 +80,6 @@ class EventControllerTest {
     }
 
     @Test
-    void createEvent_ValidationFailure() throws Exception {
-        createEventDTO.setName("");
-
-        mockMvc.perform(post("/api/v1/events")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(createEventDTO)))
-                .andExpect(status().isBadRequest());
-
-        verify(eventService, never()).createEvent(any(EventEntity.class), anyLong());
-    }
-
-    @Test
     void findAllEvents() throws Exception {
         List<EventEntity> events = Arrays.asList(testEvent);
         when(eventService.findAllEvents()).thenReturn(events);

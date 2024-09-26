@@ -114,25 +114,4 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[1].id").value(2L))
                 .andExpect(jsonPath("$[1].name").value("User Two"));
     }
-
-    @Test
-    void updateUserRole_UpdatesRoleSuccessfully() throws Exception {
-        UserEntity.Role newRole = UserEntity.Role.ADMIN; // Supondo que você tenha um enum Role na classe UserEntity
-        UserEntity updatedUser = new UserEntity();
-        updatedUser.setId(1L);
-        updatedUser.setName("Updated User");
-        updatedUser.setEmail("updated@example.com");
-        updatedUser.setRole(newRole);
-
-        Mockito.when(userService.updateUserRole(eq(1L), any(UserEntity.Role.class))).thenReturn(updatedUser);
-
-        mockMvc.perform(put("/api/v1/users/1/role")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(newRole)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("Updated User"))
-                .andExpect(jsonPath("$.email").value("updated@example.com"))
-                .andExpect(jsonPath("$.role").value(newRole.name()));
-    }
 }

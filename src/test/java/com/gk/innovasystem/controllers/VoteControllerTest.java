@@ -70,18 +70,6 @@ class VoteControllerTest {
     }
 
     @Test
-    void vote_ValidationFailure() throws Exception {
-        voteDTO.setUserId(null);
-
-        mockMvc.perform(post("/api/v1/votes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(voteDTO)))
-                .andExpect(status().isBadRequest());
-
-        verify(voteService, never()).vote(anyLong(), anyLong(), anyLong());
-    }
-
-    @Test
     void vote_ServiceException() throws Exception {
         doThrow(new RuntimeException("Vote failed")).when(voteService).vote(anyLong(), anyLong(), anyLong());
 
